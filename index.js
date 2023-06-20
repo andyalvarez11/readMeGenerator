@@ -1,18 +1,29 @@
 const inquirer=require("inquirer");
 const fs=require("fs");
 
-const questions = [""];
+const generateReadMe = ({projectName, projectDescription, tableOfContent, installation, usage, contribution, tests, license}) =>
+`
+#${projectName}
+##${projectDescription}
+##${tableOfContent}
+##${installation}
+##${usage}
+##${contribution}
+##${tests}
+##${license}
+
+`;
+
 const project={
-    title:"",
-    description:"",
+    projectName:"",
+    projectDescription:"",
     tableOfContent:"",
     installation:"",
     usage:"",
     contribution:"",
-    tests:""
+    tests:"",
+    license:""
 }
-
-const readMeTemplate = ""
 
 inquirer.prompt([
     {
@@ -61,10 +72,10 @@ inquirer.prompt([
         name:"userContribution",
         message:"What does the user need to know about contributing to the repo?"
     },
-]).then(response=>{
-    readMeTemplate
+]).then((answers) =>{
+    readMeContent = generateReadMe(answers);
 
-    fs.writeFile("README.md",readMeTemplate,error=>{
+    fs.writeFile("README.md",readMeContent,(error)=>{
         if(error){
             console.log(error);
         } else {
